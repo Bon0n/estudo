@@ -1,21 +1,19 @@
+//Config Express - Usado para subir servidor html
 const express = require("express");
 const app = express();
+const handlebars = require("express-handlebars");
 
-app.get("/", function(req, res){
-    res.sendFile(__dirname + "/html/index.html");
+//Config Sequelize
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize('sistemadecadastro','root','R0omArmy',{
+    host: 'localhost',
+    dialect: 'mysql'
 });
 
-app.get("/sobre", function(req,res){
-    res.send("Isso aqui e sobre nos seu cuzao");
-});
-
-app.get("/blog", function(req,res){
-    res.send("Te amo!");
-});
-
-app.get("/ola/:nome/:cargo", function(req,res){
-    res.send(req.params);
-});
+//Config
+    //Template Engine
+    app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+    app.set('view engine', 'handlebars')
 
 app.listen(8081, function(){
     console.log("O Servidor está rodando na porta 8081");
